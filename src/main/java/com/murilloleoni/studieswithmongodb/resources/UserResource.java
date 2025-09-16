@@ -1,5 +1,6 @@
 package com.murilloleoni.studieswithmongodb.resources;
 
+import com.murilloleoni.studieswithmongodb.domain.Post;
 import com.murilloleoni.studieswithmongodb.domain.User;
 import com.murilloleoni.studieswithmongodb.dto.UserDTO;
 import com.murilloleoni.studieswithmongodb.services.UserService;
@@ -54,6 +55,12 @@ public class UserResource {
     public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 
 }
